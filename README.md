@@ -2,7 +2,7 @@
 Project Development Steps: CoinCare Expense Tracker
 
 ### Step 1: Environment Setup
-JDK Installation: Installed Java 17 (or higher) to handle modern JavaFX and OCR libraries.
+- JDK Installation: Installed Java 17 (or higher) to handle modern JavaFX and OCR libraries.
 
 IDE Configuration: Set up IntelliJ IDEA with the Maven build system to manage project dependencies.
 
@@ -41,5 +41,5 @@ CSV Export: Built methods to export both the expense history and the user list i
 
 Scene Switching: Configured the app to transition smoothly from Login to Dashboard and back (Logout).
 
-Step 7: Packaging and Deployment
+### Step 7: Packaging and Deployment
 Used the jpackage tool to bundle the Java code and the runtime into a standalone Windows .exe installer.
