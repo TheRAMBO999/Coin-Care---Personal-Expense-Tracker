@@ -1,4 +1,6 @@
 # Coin Care 
+
+![CoinCare](CoinCare.jpg)
 Project Development Steps: CoinCare Expense Tracker
 
 ### Step 1: Environment Setup
