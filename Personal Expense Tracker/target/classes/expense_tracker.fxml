@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<VBox prefHeight="700" prefWidth="1100" stylesheets="@styles.css" xmlns:fx="http://javafx.com/fxml" fx:controller="com.expensetracker.ExpenseTrackerApp">
+    <HBox spacing="20" alignment="CENTER_LEFT" prefWidth="250" styleClass="sidebar">
+        <ImageView fx:id="navLogo" fitHeight="30" fitWidth="30" preserveRatio="true">
+            <image>
+                <Image url="@/CoinCare.jpg" />
+            </image>
+        </ImageView>
+        <Label text="CoinCare" style="-fx-text-fill: #b78919; -fx-font-size: 24; -fx-font-weight: bold;">
+            <padding><Insets right="20"></Insets></padding>
+        </Label>
+        <Region HBox.hgrow="ALWAYS"></Region>
+        <ComboBox fx:id="currencySelector" onAction="#handleCurrencyChange" prefWidth="100" styleClass="small-combo" promptText="Currency"/>
+
+            <Button text="🏠 Add Expense" onAction="#showHome" maxWidth="Infinity" styleClass="nav-btn"/>
+            <Button text="📊 Statistics" onAction="#showStats" maxWidth="Infinity" styleClass="nav-btn"/>
+            <Button text="📜 History" onAction="#showHistory" maxWidth="Infinity" styleClass="nav-btn"/>
+
+
+        <HBox spacing="5" alignment="CENTER_LEFT" style="-fx-background-color: #21262d; -fx-padding: 5 10; -fx-background-radius: 5;">
+            <ComboBox fx:id="converterFrom" prefWidth="80" styleClass="small-combo"/>
+            <TextField fx:id="converterInput" promptText="Amt" prefWidth="60" styleClass="converter-field"/>
+            <Label text="=" style="-fx-text-fill: #8b949e;"/>
+            <Label fx:id="converterResult" text="0.00" style="-fx-text-fill: #58a6ff; -fx-font-weight: bold;"/>
+            <ComboBox fx:id="converterTarget" prefWidth="80" styleClass="small-combo"/>
+        </HBox>
+    </HBox>
+
+
+    <StackPane VBox.vgrow="ALWAYS">
+        <Pane fx:id="backgroundLogo" styleClass="background-logo" mouseTransparent="true" />
+
+        <VBox fx:id="homePane" spacing="20" alignment="CENTER" visible="false">
+            <VBox spacing="15" maxWidth="400" styleClass="card">
+                <HBox alignment="TOP_RIGHT" maxWidth="400">
+                    <Button text="🏠" onAction="#goHome" styleClass="icon-button"/>
+                </HBox>
+                <Label text="Add Transaction" style="-fx-text-fill: white; -fx-font-size: 20;"/>
+                <ComboBox fx:id="typeSelector" maxWidth="Infinity" />
+                <ComboBox fx:id="categorySelector" promptText="Select Category" maxWidth="Infinity" />
+
+                <TextField fx:id="amountField" promptText="Amount" />
+                <TextField fx:id="descriptionField" promptText="Description" />
+                <DatePicker fx:id="datePicker" maxWidth="Infinity" />
+                <Button text="SAVE TRANSACTION" onAction="#addExpense" styleClass="save-btn" maxWidth="Infinity"/>
+                <Button text="SCAN RECEIPT" onAction="#scanReceipt" styleClass="scan-btn" maxWidth="Infinity"/>
+            </VBox>
+        </VBox>
+
+
+        <VBox fx:id="historyPane" spacing="20" style="-fx-padding: 40;" visible="false">
+            <HBox spacing="20" alignment="CENTER" styleClass="dashboard-header">
+
+                <Button text="🏠" onAction="#goHome" styleClass="icon-button"/>
+                <VBox alignment="CENTER"><Label text="Income" style="-fx-text-fill: #58a6ff;"/><Label fx:id="totalIncomeLabel" text="0.00" style="-fx-text-fill: white;"/></VBox>
+                <Separator orientation="VERTICAL" opacity="0.1"/>
+                <VBox alignment="CENTER"><Label text="Expense" style="-fx-text-fill: #f85149;"/><Label fx:id="totalExpenseLabel" text="0.00" style="-fx-text-fill: white;"/></VBox>
+                <Separator orientation="VERTICAL" opacity="0.1"/>
+                <VBox alignment="CENTER"><Label text="Total" style="-fx-text-fill: #888888;"/><Label fx:id="balanceLabel" text="0.00" style="-fx-text-fill: white;"/></VBox>
+                <Button text="Export to CSV" onAction="#handleExport" styleClass="nav-btn-top"/>
+
+            </HBox>
+            <TableView fx:id="expenseTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="dateCol" text="Date" prefWidth="150"/>
+                    <TableColumn fx:id="catCol" text="Category" prefWidth="150"/>
+                    <TableColumn fx:id="amtCol" text="Amount" prefWidth="120"/>
+                    <TableColumn fx:id="descCol" text="Description" prefWidth="250"/>
+                    <TableColumn fx:id="editCol" text="Edit" prefWidth="80"/>
+                    <TableColumn fx:id="deleteCol" text="Delete" prefWidth="80"/>
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+            </TableView>
+        </VBox>
+
+
+        <VBox fx:id="statsPane" visible="false" spacing="20" style="-fx-padding: 30;">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button text="🏠" onAction="#goHome" styleClass="icon-button"/>
+                <Label fx:id="reportTitle" text="Analysis" style="-fx-text-fill: white; -fx-font-size: 24;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <ComboBox fx:id="categoryFilter" onAction="#handleCategoryFilter" promptText="Filter by Category"/>
+                <Button text="Daily" onAction="#dailyReport" styleClass="report-btn"/>
+                <Button text="Weekly" onAction="#weeklyReport" styleClass="report-btn"/>
+                <Button text="Monthly" onAction="#monthlyReport" styleClass="report-btn"/>
+            </HBox>
+            <PieChart fx:id="reportChart" VBox.vgrow="ALWAYS"/>
+        </VBox>
+
+
+    </StackPane>
+    <VBox alignment="BOTTOM_RIGHT" spacing="10" mouseTransparent="false" StackPane.alignment="BOTTOM_RIGHT">
+    <StackPane.margin><Insets bottom="30" right="30"/></StackPane.margin>
+
+    <Button text="LOGOUT" onAction="#handleLogout"
+            style="-fx-background-color: #f85149; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-padding: 10 20; -fx-cursor: hand;"/>
+
+    <Button text="+" onAction="#showHome" styleClass="fab-button" />
+</VBox>
+
+</VBox>
